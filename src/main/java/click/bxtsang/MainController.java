@@ -21,9 +21,4 @@ public class MainController {
 
         return HttpResponse.redirect(location);
     }
-
-//    @Get("/test")
-//    public String testMethod() {
-//        return urlRecordRepository.getUrlFromHash("test");
-//    }
 }

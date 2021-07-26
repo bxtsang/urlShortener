@@ -49,7 +49,7 @@ public class UrlRecordRepository {
         return item.get("url").s();
     }
 
-    public boolean write(String hash, String url) {
+    public void write(String hash, String url) {
 
         Map<String, AttributeValue> itemValues = new HashMap<>();
 
@@ -62,7 +62,5 @@ public class UrlRecordRepository {
                 .build();
 
         dbClient.putItem(request);
-
-        return true;
     }
 }

@@ -2,6 +2,8 @@ package click.bxtsang.shortener;
 
 import click.bxtsang.UrlRecordRepository;
 import io.micronaut.context.annotation.Property;
+import io.micronaut.http.HttpStatus;
+import io.micronaut.http.exceptions.HttpStatusException;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -22,11 +24,13 @@ public class ShortenerService {
 
     public String shortenUrl(String url) {
         String hash = generateRandomString();
-        if (urlRecordRepository.write(hash, url)) {
-            return domain + "/" + hash;
-        }
 
-        return "something went wrong";
+        try {
+            urlRecordRepository.write(hash, url);
+            return domain + "/" + hash;
+        } catch (Exception e) {
+            throw new HttpStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to connect to database");
+        }
     }
 
     public String generateRandomString() {
@@ -38,7 +42,7 @@ public class ShortenerService {
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString();
 
-        // add validation
+        // can add validation
 
         return generatedString;
     }
