@@ -36,28 +36,24 @@
   </div>
 
   <script>
-    function handleInput() {
+    async function handleInput() {
       document.querySelector('#generated').innerText = "loading..."
       const data = { url: document.querySelector('#url').value }
 
-      fetch('http://bxtsang.click/shortener/create',
+      const response = await fetch('http://bxtsang.click/shortener/create',
               {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
-              }
-      ).then((response) => {
-          if (!response.ok) {
-              throw Error(response.statusText)
-          }
-      })
-      .then(response => response.text())
-      .then((generated) => document.querySelector('#generated').innerHTML = `<a href="${generated}">${generated}</a>`)
-      .catch(() => {
-          document.querySelector('#generated').innerText = "Sorry, something went wrong."
-      })
+              })
+      if (response.ok) {
+          const generated = await response.text()
+          document.querySelector('#generated').innerHTML = `<a href="${generated}">${generated}</a>`
+      } else {
+          document.querySelector('#generated').innerText = 'Sorry, something went wrong.'
+      }
     }
   </script>
 </body>
