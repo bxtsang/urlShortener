@@ -1,4 +1,4 @@
-package click.bxtsang.shortener;
+package click.bxtsang;
 
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
@@ -25,6 +25,20 @@ public class UrlRecordRepository {
 
         Map<String, AttributeValue> keyMap = new HashMap<>();
         keyMap.put(key, AttributeValue.builder().s(keyVal).build());
+
+        GetItemRequest request = GetItemRequest.builder()
+                .key(keyMap)
+                .tableName(DB_TABLE)
+                .build();
+
+        Map<String, AttributeValue> item = dbClient.getItem(request).item();
+        return item.get("url").s();
+    }
+
+    public String getUrlFromHash(String hash) {
+
+        Map<String, AttributeValue> keyMap = new HashMap<>();
+        keyMap.put(HASH_COL, AttributeValue.builder().s(hash).build());
 
         GetItemRequest request = GetItemRequest.builder()
                 .key(keyMap)
