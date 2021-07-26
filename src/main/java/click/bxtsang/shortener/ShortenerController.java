@@ -18,7 +18,7 @@ public class ShortenerController {
     public String shortenUrl(Map<String, String> body) {
         // can do some error handling here
         String url = body.get("url");
-        if (!url.substring(0, 4).equals("http") || !url.substring(0, 2).equals("//")) {
+        if (!url.substring(0, 4).equals("http") && !url.substring(0, 2).equals("//")) {
             url = "//" + url;
         }
 
