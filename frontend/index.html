@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>URL Shortener</title>
+  <style>
+    body {
+      margin: 0;
+    }
+
+    div {
+      height: 150px;
+      width: 400px;
+      border: 1px solid black;
+      border-radius: 30px;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      padding: 10px;
+      text-align: center;
+    }
+
+    #title {
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <h2 id="title">URL Shortener</h2>
+    <label for="url">URL to shorten:</label>
+    <input id="url" />
+    <button onclick="handleInput()">hello</button>
+    <br><br>
+    Generated URL: <span id="generated"></span>
+  </div>
+
+  <script>
+    function handleInput() {
+      document.querySelector('#generated').innerText = "loading..."
+      const data = { url: document.querySelector('#url').value }
+
+      fetch('http://localhost:8080/shortener/create',
+              {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+              }
+      ).then(response => response.text())
+      .then((generated) => document.querySelector('#generated').innerHTML = `<a href="${generated}">${generated}</a>`)
+    }
+  </script>
+</body>
+</html>
