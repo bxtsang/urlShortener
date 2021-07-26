@@ -30,7 +30,7 @@
     <h2 id="title">URL Shortener</h2>
     <label for="url">URL to shorten:</label>
     <input id="url" />
-    <button onclick="handleInput()">hello</button>
+    <button onclick="handleInput()">Go!</button>
     <br><br>
     Generated URL: <span id="generated"></span>
   </div>
@@ -40,7 +40,7 @@
       document.querySelector('#generated').innerText = "loading..."
       const data = { url: document.querySelector('#url').value }
 
-      fetch('http://localhost:8080/shortener/create',
+      fetch('http://bxtsang.click/shortener/create',
               {
                 method: 'POST',
                 headers: {

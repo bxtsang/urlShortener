@@ -13,7 +13,7 @@ public class MainController {
     @Inject
     UrlRecordRepository urlRecordRepository;
 
-    @Get("/{hash}")
+    @Get("/url/{hash}")
     public HttpResponse<String> redirect(String hash) throws URISyntaxException {
 
         String url = urlRecordRepository.getUrlFromHash(hash);

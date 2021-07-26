@@ -1,7 +1,0 @@
-micronaut:
-  application:
-    name: urlShortener
-
-  server:
-    cors:
-      enabled: true

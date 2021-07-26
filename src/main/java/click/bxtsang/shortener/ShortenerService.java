@@ -1,6 +1,7 @@
 package click.bxtsang.shortener;
 
 import click.bxtsang.UrlRecordRepository;
+import io.micronaut.context.annotation.Property;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -12,10 +13,12 @@ public class ShortenerService {
     @Inject
     UrlRecordRepository urlRecordRepository;
 
+    @Property(name = "domain.location")
+    private String domain;
+
     private String DB_TABLE = "url_records";
 
     private int STRING_LENGTH = 6;
-    private String domain = "bxtsang.click";
 
     public String shortenUrl(String url) {
         String hash = generateRandomString();

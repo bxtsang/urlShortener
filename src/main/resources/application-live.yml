@@ -1,0 +1,16 @@
+micronaut:
+  application:
+    name: urlShortener
+
+  server:
+    cors:
+      enabled: true
+  router:
+    static-resources:
+      default:
+        enabled: true
+        mapping: "/home/**"
+        paths: classpath:public
+
+domain:
+  location: http://bxtsang.click/url
