@@ -62,6 +62,7 @@ public class ShortenerServiceTest {
 
         Assertions.assertNotEquals(formattedUrl, urlToFormat);
         Assertions.assertTrue(formattedUrl.startsWith("//"));
+        Assertions.assertEquals(formattedUrl.substring(2), urlToFormat);
     }
 
     @Test
