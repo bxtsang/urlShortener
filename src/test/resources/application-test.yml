@@ -7,9 +7,13 @@ micronaut:
       enabled: true
   router:
     static-resources:
-      default:
+      home:
         enabled: true
         mapping: "/home/**"
+        paths: classpath:public
+      default:
+        enabled: true
+        mapping: "/"
         paths: classpath:public
 
 domain:

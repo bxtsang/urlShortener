@@ -49,7 +49,7 @@ public class ShortenerService {
     }
 
     public String formatUrl(String url) {
-        if (!url.substring(0, 4).equals("http") && !url.substring(0, 2).equals("//")) {
+        if (!(url.startsWith("http") || url.startsWith("//"))) {
             return "//" + url;
         }
 
