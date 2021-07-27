@@ -18,15 +18,16 @@ public class ShortenerService {
     @Property(name = "domain.location")
     private String domain;
 
-    private String DB_TABLE = "url_records";
+    private final String DB_TABLE = "url_records";
 
-    private int STRING_LENGTH = 6;
+    private final int STRING_LENGTH = 6;
 
     public String shortenUrl(String url) {
+        String formattedUrl = formatUrl(url);
         String hash = generateRandomString();
 
         try {
-            urlRecordRepository.write(hash, url);
+            urlRecordRepository.write(hash, formattedUrl);
             return domain + "/" + hash;
         } catch (Exception e) {
             throw new HttpStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to connect to database");
@@ -45,5 +46,13 @@ public class ShortenerService {
         // can add validation
 
         return generatedString;
+    }
+
+    public String formatUrl(String url) {
+        if (!url.substring(0, 4).equals("http") && !url.substring(0, 2).equals("//")) {
+            return "//" + url;
+        }
+
+        return url;
     }
 }

@@ -28,6 +28,8 @@ dependencies {
 
     implementation("io.micronaut.aws:micronaut-aws-sdk-v2")
     implementation("software.amazon.awssdk:dynamodb")
+
+    implementation('org.mockito:mockito-core:3.11.1')
 }
 
 
