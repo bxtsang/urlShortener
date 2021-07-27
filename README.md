@@ -5,7 +5,7 @@ Built and deployed with AWS resources, using [Micronaut](https://micronaut.io/).
 
 All generated urls follow the pattern *http://bxtsang.click/url/<hash>*
 
-Go to the [deployed frontend](http://bxtsang.click/home/index.html).
+Go to the [deployed frontend](http://bxtsang.click/home/index.html) or access http://bxtsang.click.
 
 ## To run locally
 
