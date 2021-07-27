@@ -32,28 +32,46 @@
     <input id="url" />
     <button onclick="handleInput()">Go!</button>
     <br><br>
-    Generated URL: <span id="generated"></span>
+    <span id="output-label">Generated URL:</span> <span id="generated"></span>
   </div>
 
   <script>
     async function handleInput() {
       document.querySelector('#generated').innerText = "loading..."
       const data = { url: document.querySelector('#url').value }
+      let checkUrl = data.url
+      if (checkUrl.substring(0, 4) !== 'http' && checkUrl.substring(0, 2) !== '//') {
+          checkUrl = '//' + checkUrl
+      }
 
-      const response = await fetch('http://bxtsang.click/shortener/create',
-              {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-              })
-      if (response.ok) {
+      try {
+        const check = await fetch(checkUrl, {
+          method: 'HEAD',
+          mode: 'no-cors'
+        })
+
+        const response = await fetch('http://bxtsang.click/shortener/create',
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+          })
+
+        if (response.ok) {
           const generated = await response.text()
           document.querySelector('#generated').innerHTML = `<a href="${generated}">${generated}</a>`
-      } else {
+        } else {
+          document.querySelector('#output-label').innerText = 'Message:'
           document.querySelector('#generated').innerText = 'Sorry, something went wrong.'
+        }
+
+      } catch (e) {
+        document.querySelector('#output-label').innerText = 'Message:'
+        document.querySelector('#generated').innerText = 'Hmm... that URL seems wrong, check and try again!'
       }
+
     }
   </script>
 </body>
