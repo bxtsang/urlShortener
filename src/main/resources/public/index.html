@@ -29,15 +29,21 @@
   <div>
     <h2 id="title">URL Shortener</h2>
     <label for="url">URL to shorten:</label>
-    <input id="url" />
-    <button onclick="handleInput()">Go!</button>
+    <input id="url" onkeyup="enter(event)" />
+    <button id="enter-button" onclick="handleInput()">Go!</button>
     <br><br>
     <span id="output-label">Generated URL:</span> <span id="generated"></span>
   </div>
 
   <script>
+    function enter(event) {
+      if (event.keyCode === 13) {
+        document.querySelector('#enter-button').click()
+      }
+    }
+
     async function handleInput() {
-      document.querySelector('#generated').innerText = "loading..."
+      document.querySelector('#generated').innerText = 'loading...'
       const data = { url: document.querySelector('#url').value }
       let checkUrl = data.url
       if (checkUrl.substring(0, 4) !== 'http' && checkUrl.substring(0, 2) !== '//') {
