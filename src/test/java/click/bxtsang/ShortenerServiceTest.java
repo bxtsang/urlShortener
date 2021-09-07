@@ -37,7 +37,7 @@ public class ShortenerServiceTest {
         String generatedString = shortenerService.generateRandomString();
 
         Assertions.assertNotNull(generatedString);
-        Assertions.assertEquals(generatedString.length(), HASH_LENGTH);
+        Assertions.assertEquals(HASH_LENGTH, generatedString.length());
         Assertions.assertTrue(generatedString.matches("^[a-zA-Z0-9]+$"));
     }
 

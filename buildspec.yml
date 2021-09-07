@@ -1,0 +1,16 @@
+version: 0.1
+
+phases:
+  install:
+    runtime-versions:
+      java: corretto11
+
+  build:
+    commands:
+      - echo Build started on `date`
+      - gradlew build
+
+artifacts:
+  type: zip
+  files:
+    - 'build/libs/urlShortener-0.1-all.jar'

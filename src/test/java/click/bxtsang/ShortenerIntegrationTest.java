@@ -3,6 +3,7 @@ package click.bxtsang;
 import click.bxtsang.shortener.ShortenerService;
 import io.micronaut.context.annotation.Property;
 import io.micronaut.http.HttpRequest;
+import io.micronaut.http.client.HttpClient;
 import io.micronaut.http.client.RxHttpClient;
 import io.micronaut.http.client.annotation.Client;
 import io.micronaut.runtime.server.EmbeddedServer;
@@ -29,8 +30,8 @@ public class ShortenerIntegrationTest {
     UrlRecordRepository urlRecordRepository;
 
     @Inject
-    @Client
-    RxHttpClient client;
+    @Client("http://localhost")
+    HttpClient client;
 
     @Property(name = "domain.location")
     private String domain;
@@ -48,7 +49,7 @@ public class ShortenerIntegrationTest {
             String storedUrl = urlRecordRepository.getUrlFromHash(hash);
 
             Assertions.assertNotNull(storedUrl);
-            Assertions.assertEquals(storedUrl, validUrl);
+            Assertions.assertEquals(validUrl, storedUrl);
         }
 
         String generatedUrl = shortenerService.shortenUrl(urlToFormat);
@@ -58,18 +59,16 @@ public class ShortenerIntegrationTest {
         String storedUrl = urlRecordRepository.getUrlFromHash(hash);
 
         Assertions.assertNotNull(storedUrl);
-        Assertions.assertEquals(storedUrl, "//" + urlToFormat);
+        Assertions.assertEquals("//" + urlToFormat, storedUrl);
     }
 
     @Test
-    public void testShortenerController() throws URISyntaxException {
-        // this test fails, seems like Micronaut has a bug not logged or updated in their docs
+    public void testShortenerController() {
         Map<String, String> body = new HashMap<>();
         String url = "https://www.google.com";
         body.put("url", url);
 
-        // test fails here, the HttpClient can't read a relative path...
-        HttpRequest<Map<String, String>> request = HttpRequest.POST("/shortener/test", body);
+        HttpRequest<Map<String, String>> request = HttpRequest.POST(server.getURI().toString() + "/shortener/create", body);
         String response = client.toBlocking().retrieve(request);
 
         Assertions.assertTrue(response.startsWith(domain));
@@ -78,6 +77,6 @@ public class ShortenerIntegrationTest {
         String hash = generatedUrlArr[generatedUrlArr.length - 1];
         String storedUrl = urlRecordRepository.getUrlFromHash(hash);
 
-        Assertions.assertEquals(response, url);
+        Assertions.assertEquals(url, storedUrl);
     }
 }
