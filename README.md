@@ -5,7 +5,7 @@ Built and deployed with AWS resources, using [Micronaut](https://micronaut.io/).
 
 All generated urls follow the pattern *http://bxtsang.click/url/<hash>*
 
-Go to the [deployed frontend](http://bxtsang.click/home/index.html).
+Go to the [deployed frontend](http://bxtsang.click/home/index.html) or access http://bxtsang.click.
 
 ## To run locally
 
@@ -26,4 +26,5 @@ Some tests have been added for the ShortenerService, including unit and integrat
 
 ### Note:
 There is one failing test under `src/test/click.bxtsang.ShortenerIntegrationTest`</br>
-This seems to be due to a bug in the Micronaut framework, where the HttpClient provided by the framework is unable to make requests with relative URL paths, and seems to lookup on the wrong host when providing a host in the URI.
+This seems to be due to a bug in the Micronaut framework, where the HttpClient provided by the framework is unable to make requests with relative URL paths, and seems to lookup on the wrong host when providing a host in the URI.</br>
+On the docs, it should be able to use a relative URL path... will be submitting an issue 😬
