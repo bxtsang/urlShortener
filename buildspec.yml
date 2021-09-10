@@ -11,5 +11,6 @@ phases:
       - ./gradlew build
 
 artifacts:
+  discard-paths: yes
   files:
     - 'build/libs/urlShortener-0.1-all.jar'
